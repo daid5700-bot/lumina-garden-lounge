@@ -21,7 +21,7 @@ export async function createAdminSession(user: { id: string; email: string; name
   const encoded = Buffer.from(JSON.stringify(payload)).toString("base64url");
   const token = `${encoded}.${sign(encoded)}`;
   const store = await cookies();
-  store.set(COOKIE_NAME, token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: MAX_AGE });
+  store.set(COOKIE_NAME, token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "strict", path: "/", maxAge: MAX_AGE, priority: "high" });
 }
 
 export async function getAdminSession(): Promise<SessionPayload | null> {

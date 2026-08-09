@@ -4,8 +4,10 @@ import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 import { createAdminSession, destroyAdminSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { consumeRateLimit } from "@/lib/rate-limit";
 
 export async function loginAction(formData: FormData) {
+  if (!(await consumeRateLimit("admin-login", 10, 15 * 60 * 1_000)).allowed) redirect("/admin/login?error=rate-limit");
   const email = String(formData.get("email") || "").trim().toLowerCase();
   const password = String(formData.get("password") || "");
   let user: { id: string; email: string; name: string; passwordHash?: string } | null = null;

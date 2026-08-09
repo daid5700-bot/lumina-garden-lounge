@@ -4,7 +4,8 @@ import { CircleCheck, PhoneCall } from "lucide-react";
 import { notFound } from "next/navigation";
 import { BookingForm } from "@/components/public/BookingForm";
 import { MenuImagePager } from "@/components/public/MenuImagePager";
-import { getGallery, getMenu, getSiteContent } from "@/lib/content";
+import { NewsArticleList } from "@/components/public/NewsArticleList";
+import { getMenu, getPosts, getSiteContent } from "@/lib/content";
 import { isLocale, ui } from "@/lib/i18n";
 import { legacyCopy } from "@/lib/legacy-copy";
 
@@ -18,11 +19,11 @@ export default async function HomePage({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const [{ booking }, site, menu, gallery] = await Promise.all([
+  const [{ booking }, site, menu, posts] = await Promise.all([
     searchParams,
     getSiteContent(locale),
     getMenu(locale),
-    getGallery(locale)
+    getPosts(locale)
   ]);
   const t = ui[locale];
   const copy = legacyCopy[locale];
@@ -38,12 +39,11 @@ export default async function HomePage({
   const zaloDisplay = zaloDigits.length === 10
     ? `${zaloDigits.slice(0, 4)}.${zaloDigits.slice(4, 7)}.${zaloDigits.slice(7)}`
     : site.zalo;
-  const originalGalleryOrder = [gallery[2], gallery[0], gallery[1], gallery[3]].filter(Boolean);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Restaurant",
     name: site.siteName,
-    image: [site.heroImage, ...gallery.slice(0, 2).map((item) => item.image)],
+    image: [site.heroImage],
     address: {
       "@type": "PostalAddress",
       streetAddress: site.address,
@@ -161,29 +161,14 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section className="gallery-section" id="gallery">
+      <section className="home-blog-section" id="blog">
         <div className="container">
           <div className="text-center mb-50">
-            <h2 className="section-main-title" data-aos="zoom-in">
-              {copy.galleryTitle[0]} <span className="glow-text-cyan">{copy.galleryTitle[1]}</span>
-            </h2>
-          </div>
-          <div className="gallery-grid">
-            {originalGalleryOrder.map((item, index) => (
-              <Link
-                href={`/${locale}/gallery`}
-                className="gallery-item skew-box"
-                data-aos="flip-left"
-                data-aos-duration="1000"
-                data-aos-delay={String(index * 200)}
-                key={item.id}
-              >
-                <div className="skew-image" style={{ backgroundImage: `url(${item.image})` }} />
-                <div className="gallery-overlay"><h4>{item.title}</h4></div>
-              </Link>
-            ))}
+            <h2 className="section-main-title home-blog-title" data-aos="zoom-in">Blog</h2>
           </div>
         </div>
+        <NewsArticleList locale={locale} posts={posts.slice(0, 3)} />
+        {posts.length > 3 && <div className="home-blog-actions" data-aos="fade-up"><Link href={`/${locale}/news`} className="btn-rect">{copy.readMore}</Link></div>}
       </section>
 
       <section className="booking-section neon-border-top" id="booking">

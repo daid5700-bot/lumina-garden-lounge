@@ -42,3 +42,9 @@ Mỗi ngôn ngữ có metadata riêng, canonical/hreflang, Open Graph, Twitter C
 Ảnh upload từ CMS được lưu trên Cloudflare R2; cần cấu hình các biến `R2_*` trong `.env` và Vercel.
 
 Trên Vercel cần thêm cả `DATABASE_URL` và `DIRECT_URL`; Supavisor Transaction mode không hỗ trợ prepared statements, nên `DATABASE_URL` bắt buộc có `pgbouncer=true`.
+
+## Bảo mật khi triển khai
+
+- Trên Vercel Firewall, tạo rate-limit theo IP cho `/admin/login` (10 request / 15 phút) và các Server Actions booking; bật Attack Challenge Mode khi có dấu hiệu bị bot tấn công.
+- Giữ `AUTH_SECRET`, `DATABASE_URL`, `DIRECT_URL` và `R2_API_TOKEN` chỉ trong Environment Variables, không đưa vào Git hay client-side code.
+- Website đã có CSP, HSTS, chặn iframe/clickjacking và giới hạn 8MB cho request upload.

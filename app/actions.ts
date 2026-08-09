@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { isLocale } from "@/lib/i18n";
+import { consumeRateLimit } from "@/lib/rate-limit";
 
 function vietnamToday() {
   return new Intl.DateTimeFormat("en-CA", {
@@ -24,9 +25,10 @@ const bookingSchema = z.object({
 });
 
 export async function createBookingAction(formData: FormData) {
-  const parsed = bookingSchema.safeParse(Object.fromEntries(formData));
   const requestedLocale = String(formData.get("locale"));
   const locale = isLocale(requestedLocale) ? requestedLocale : "vi";
+  if (!(await consumeRateLimit("booking", 8, 15 * 60 * 1_000)).allowed) redirect(`/${locale}?booking=error#booking`);
+  const parsed = bookingSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success || !process.env.DATABASE_URL) redirect(`/${locale}?booking=error#booking`);
 
   try {
