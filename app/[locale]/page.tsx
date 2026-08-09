@@ -72,17 +72,24 @@ export default async function HomePage({
       <div className="orb orb-2" />
       <div className="orb orb-3" />
 
-      <section className="hero" id="home" style={{ backgroundImage: `url(${site.heroImage})` }}>
+      <section className="hero" id="home">
+        <Image
+          src={site.heroImage}
+          alt=""
+          className="hero-background-image"
+          fill
+          priority
+          sizes="100vw"
+        />
         {site.heroVideo && (
           <video
             className="hero-video"
             src={site.heroVideo}
-            poster={site.heroImage}
             autoPlay
             muted
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
             aria-hidden="true"
           />
         )}

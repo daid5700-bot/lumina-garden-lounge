@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 export function Lightbox({ items }: { items: { id: string; image: string; alt: string; delay: string }[] }) {
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
@@ -34,6 +36,10 @@ export function Lightbox({ items }: { items: { id: string; image: string; alt: s
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [currentIndex, items.length]);
 
+  useEffect(() => {
+    if (currentIndex !== null) closeButtonRef.current?.focus();
+  }, [currentIndex]);
+
   const handleNext = () => {
     if (currentIndex !== null) {
       setCurrentIndex((currentIndex + 1) % items.length);
@@ -50,37 +56,44 @@ export function Lightbox({ items }: { items: { id: string; image: string; alt: s
     <>
       <div className="gallery-grid-new">
         {items.map((item, index) => (
-          <figure 
+          <button
+            type="button"
             className="gallery-card" 
             data-aos="zoom-in" 
             data-aos-delay={item.delay} 
             key={item.id}
             onClick={() => setCurrentIndex(index)}
+            aria-label={`Mở ảnh ${index + 1}: ${item.alt}`}
           >
             <Image src={item.image} alt={item.alt} fill sizes="(max-width: 576px) calc(100vw - 40px), (max-width: 992px) 42vw, 21vw" />
-          </figure>
+          </button>
         ))}
       </div>
 
       {currentIndex !== null && typeof document !== 'undefined' && createPortal(
-        <div 
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Xem ảnh: ${items[currentIndex].alt}`}
           className="lightbox-overlay" 
           onClick={() => setCurrentIndex(null)}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <button className="lightbox-close" onClick={() => setCurrentIndex(null)}>✕</button>
+          <button ref={closeButtonRef} type="button" className="lightbox-close" onClick={() => setCurrentIndex(null)} aria-label="Đóng xem ảnh">
+            <X aria-hidden="true" />
+          </button>
           
-          <button className="lightbox-nav prev" onClick={(e) => { e.stopPropagation(); handlePrev(); }}>
-            ❮
+          <button type="button" className="lightbox-nav prev" onClick={(e) => { e.stopPropagation(); handlePrev(); }} aria-label="Ảnh trước">
+            <ChevronLeft aria-hidden="true" />
           </button>
           
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <img src={items[currentIndex].image} alt={items[currentIndex].alt} />
+            <Image src={items[currentIndex].image} alt={items[currentIndex].alt} width={1600} height={1200} sizes="90vw" />
           </div>
 
-          <button className="lightbox-nav next" onClick={(e) => { e.stopPropagation(); handleNext(); }}>
-            ❯
+          <button type="button" className="lightbox-nav next" onClick={(e) => { e.stopPropagation(); handleNext(); }} aria-label="Ảnh tiếp theo">
+            <ChevronRight aria-hidden="true" />
           </button>
         </div>,
         document.body

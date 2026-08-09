@@ -5,11 +5,20 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { isLocale } from "@/lib/i18n";
 
+function vietnamToday() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Ho_Chi_Minh",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+}
+
 const bookingSchema = z.object({
   name: z.string().trim().min(2).max(80),
   phone: z.string().trim().min(8).max(20).regex(/^[+0-9().\s-]+$/),
   guests: z.coerce.number().int().min(1).max(100),
-  date: z.coerce.date(),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine((value) => value >= vietnamToday(), { message: "Ngày đặt bàn không được thuộc quá khứ" }).transform((value) => new Date(`${value}T12:00:00+07:00`)),
   note: z.string().trim().max(500).optional(),
   locale: z.string()
 });
