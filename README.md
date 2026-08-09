@@ -1,6 +1,6 @@
 # 909 Lumina Garden Lounge
 
-Website Next.js App Router đa ngôn ngữ (Việt, Anh, Trung, Hàn), tối ưu SEO, dùng MySQL/Prisma và có CMS dành cho chủ quán.
+Website Next.js App Router đa ngôn ngữ (Việt, Anh, Trung, Hàn), tối ưu SEO, dùng PostgreSQL/Supabase + Prisma và có CMS dành cho chủ quán.
 
 ## Chạy giao diện ngay
 
@@ -10,30 +10,28 @@ cp .env.example .env
 npm run dev
 ```
 
-Nếu chưa có MySQL, các trang public vẫn dùng dữ liệu mẫu. CMS chỉ ghi dữ liệu sau khi database được cấu hình.
+Nếu chưa có PostgreSQL, các trang public vẫn dùng dữ liệu mẫu. CMS chỉ ghi dữ liệu sau khi database được cấu hình.
 
-## Khởi tạo MySQL và CMS
+## Khởi tạo Supabase/PostgreSQL và CMS
 
-1. Đổi toàn bộ mật khẩu trong `.env.example`, sau đó tạo `.env`.
-2. Khởi động MySQL đã cài trên máy (ví dụ Homebrew: `brew services start mysql`). Docker không bắt buộc.
-3. Trong `.env`, có thể dùng `DATABASE_URL` hoặc bộ biến `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`.
-4. Tạo bảng và dữ liệu mẫu:
+1. Tạo Supabase project, mở **Project Settings → Database → Connect** và lấy URI PostgreSQL.
+2. Đổi `DATABASE_URL` bằng **Supavisor Transaction pooler** (port `6543`) và thêm `pgbouncer=true&sslmode=require`; đặt `DIRECT_URL` là direct connection (port `5432`) hoặc Session pooler.
+3. Tạo schema:
 
 ```bash
 npm run db:push
-npm run db:seed
 ```
 
-5. Mở `/admin/login` và đăng nhập bằng `ADMIN_EMAIL` / `ADMIN_PASSWORD` trong `.env`.
+4. Trong Supabase SQL Editor, chạy file `supabase-data.sql` đã xuất từ dữ liệu MySQL/TiDB cũ. Chỉ chạy `npm run db:seed` nếu muốn dữ liệu mẫu mới thay vì dữ liệu cũ.
+5. Mở `/admin/login` bằng tài khoản đã được chuyển từ dữ liệu cũ.
 
 ## Cấu trúc chính
 
 - `/vi`, `/en`, `/zh`, `/ko`: trang public theo từng ngôn ngữ.
 - `/admin`: dashboard và CMS.
-- `prisma/schema.prisma`: thiết kế database MySQL.
+- `prisma/schema.prisma`: thiết kế database PostgreSQL/Supabase.
 - `prisma/seed.ts`: nội dung mẫu và tài khoản chủ quán.
-- `lib/content.ts`: truy vấn MySQL với dữ liệu fallback an toàn.
-- `public/uploads`: ảnh upload từ CMS khi chạy trên VPS/server có ổ đĩa bền vững.
+- `lib/content.ts`: truy vấn PostgreSQL với dữ liệu fallback an toàn.
 
 ## SEO
 
@@ -41,4 +39,6 @@ Mỗi ngôn ngữ có metadata riêng, canonical/hreflang, Open Graph, Twitter C
 
 ## Lưu ý triển khai
 
-Upload hiện ghi vào `public/uploads`, phù hợp VPS/Docker có volume bền vững. Nếu triển khai Vercel/serverless, nên thay `imageValue()` trong `app/admin/actions.ts` bằng Cloudinary, S3 hoặc dịch vụ object storage tương đương.
+Ảnh upload từ CMS được lưu trên Cloudflare R2; cần cấu hình các biến `R2_*` trong `.env` và Vercel.
+
+Trên Vercel cần thêm cả `DATABASE_URL` và `DIRECT_URL`; Supavisor Transaction mode không hỗ trợ prepared statements, nên `DATABASE_URL` bắt buộc có `pgbouncer=true`.

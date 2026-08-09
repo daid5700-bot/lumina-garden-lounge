@@ -2,13 +2,13 @@ import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 
 if (!process.env.DATABASE_URL) {
-  const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
-  if (!DB_HOST || !DB_USER || DB_PASSWORD === undefined || !DB_NAME) {
-    console.error("Missing DATABASE_URL or DB_HOST/DB_USER/DB_PASSWORD/DB_NAME in .env");
+  const { POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DATABASE } = process.env;
+  if (!POSTGRES_HOST || !POSTGRES_USER || POSTGRES_PASSWORD === undefined || !POSTGRES_DATABASE) {
+    console.error("Missing DATABASE_URL or POSTGRES_HOST/POSTGRES_USER/POSTGRES_PASSWORD/POSTGRES_DATABASE in .env");
     process.exit(1);
   }
-  const auth = `${encodeURIComponent(DB_USER)}:${encodeURIComponent(DB_PASSWORD)}`;
-  process.env.DATABASE_URL = `mysql://${auth}@${DB_HOST}:${DB_PORT || "3306"}/${encodeURIComponent(DB_NAME)}`;
+  const auth = `${encodeURIComponent(POSTGRES_USER)}:${encodeURIComponent(POSTGRES_PASSWORD)}`;
+  process.env.DATABASE_URL = `postgresql://${auth}@${POSTGRES_HOST}:${POSTGRES_PORT || "5432"}/${encodeURIComponent(POSTGRES_DATABASE)}?sslmode=require`;
 }
 
 const prismaCli = resolve("node_modules/prisma/build/index.js");
