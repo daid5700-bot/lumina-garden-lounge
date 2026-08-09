@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin Tức - 909 LUMINA GARDEN LOUNGE</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+        }
+        .page-header-title {
+            text-align: center; margin: 120px 0 60px;
+            font-size: 40px; text-transform: uppercase;
+        }
+        .news-wrapper {
+            width: 100%; margin: 0 auto; padding: 0 8vw 100px;
+        }
+        .news-article {
+            display: flex; gap: 50px; align-items: center;
+            margin-bottom: 60px; padding-bottom: 60px;
+            border-bottom: 1px solid rgba(255,0,255,0.2);
+            position: relative;
+        }
+        .news-article::after {
+            content: ''; position: absolute; bottom: -1px; left: 50%;
+            transform: translateX(-50%); width: 50%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-magenta), transparent);
+            box-shadow: var(--glow-magenta);
+        }
+        .news-article:last-child {
+            border-bottom: none; margin-bottom: 0; padding-bottom: 0;
+        }
+        .news-article:last-child::after { display: none; }
+        
+        .news-article.even {
+            flex-direction: row-reverse;
+        }
+        
+        .news-img-box {
+            flex: 1;
+            position: relative;
+            transform: skewX(-12deg);
+            overflow: hidden;
+            border-radius: 15px;
+            border: 2px solid transparent;
+            background: var(--gradient-brand);
+            padding: 2px;
+            box-shadow: 0 0 15px rgba(0,243,255,0.4);
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        .news-img-inner {
+            width: 100%; height: 350px;
+            background: #000;
+            overflow: hidden;
+            border-radius: 13px;
+        }
+        .news-img-inner img {
+            width: 120%; height: 120%;
+            object-fit: cover;
+            transform: skewX(12deg) translateX(-10%) scale(1.1);
+            transition: transform 0.6s ease;
+        }
+        .news-article:hover .news-img-box {
+            box-shadow: 0 0 30px rgba(255,0,255,0.6);
+            transform: skewX(-12deg) translateY(-5px);
+        }
+        .news-article:hover .news-img-inner img {
+            transform: skewX(12deg) translateX(-10%) scale(1.2);
+        }
+        
+        .news-content {
+            flex: 1;
+        }
+        .news-content h3 {
+            font-size: 28px; color: var(--primary-cyan);
+            margin-bottom: 15px; line-height: 1.3;
+            transition: color 0.3s, text-shadow 0.3s;
+            cursor: pointer;
+        }
+        .news-article:hover .news-content h3 {
+            color: var(--primary-magenta);
+            text-shadow: var(--glow-magenta);
+        }
+        .news-content p {
+            font-size: 16px; color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+        
+        .btn-rect {
+            display: inline-flex; justify-content: center; align-items: center;
+            padding: 12px 35px; border-radius: 30px;
+            border: 1px solid var(--primary-cyan);
+            color: var(--primary-cyan); font-weight: 700; text-transform: uppercase;
+            font-size: 14px; text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            background: transparent;
+            letter-spacing: 1px;
+        }
+        .news-article:hover .btn-rect {
+            background: var(--gradient-brand);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: var(--glow-magenta);
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 992px) {
+            .news-article, .news-article.even { flex-direction: column; gap: 30px; text-align: center; }
+            .news-img-box { width: 90%; transform: skewX(0); padding: 2px; }
+            .news-img-inner img { transform: skewX(0) scale(1.1); }
+            .news-article:hover .news-img-box { transform: translateY(-5px); }
+            .news-article:hover .news-img-inner img { transform: skewX(0) scale(1.2); }
+            .news-wrapper { padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header scrolled">
+        <div class="nav-container">
+            <ul class="nav-links left-links">
+                <li><a href="index.html">Trang chủ</a></li>
+                <li><a href="index.html#about">Giới thiệu</a></li>
+                <li><a href="menu.html">Menu</a></li>
+            </ul>
+            <div class="logo">
+                <a href="index.html">
+                    <h1><span>909</span> LUMINA</h1>
+                    <p>GARDEN LOUNGE</p>
+                </a>
+            </div>
+            <ul class="nav-links right-links">
+                <li><a href="gallery.html">Hình ảnh</a></li>
+                <li><a href="news.html" class="active">Tin tức</a></li>
+                <li><a href="index.html#booking">Liên hệ</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <h1 class="page-header-title glow-text-cyan" data-aos="fade-down">TIN TỨC SỰ KIỆN</h1>
+
+    <div class="news-wrapper">
+        <!-- Article 1 (Odd: Image Left) -->
+        <article class="news-article" data-aos="fade-up">
+            <div class="news-img-box">
+                <div class="news-img-inner">
+                    <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                </div>
+            </div>
+            <div class="news-content">
+                <h3>SPECIAL GUEST DJ NIGHT: QUẨY TUNG ĐÊM HÈ</h3>
+                <p>Đêm nhạc đặc biệt với sự góp mặt của dàn DJ đình đám hứa hẹn mang lại không gian bùng nổ chưa từng có. Tận hưởng những set nhạc Vinahouse cực căng cùng hệ thống âm thanh ánh sáng triệu đô tại 909 LUMINA.</p>
+                <a href="news-detail.html" class="btn-rect">XEM THÊM</a>
+            </div>
+        </article>
+
+        <!-- Article 2 (Even: Image Right) -->
+        <article class="news-article even" data-aos="fade-up">
+            <div class="news-img-box">
+                <div class="news-img-inner">
+                    <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cecb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                </div>
+            </div>
+            <div class="news-content">
+                <h3>ƯU ĐÃI ĐẶC QUYỀN: MUA 1 TẶNG 1 COCKTAIL</h3>
+                <p>Thưởng thức ly Pandora Tears huyền thoại và nhận ngay ưu đãi hấp dẫn dành riêng cho khách hàng đặt bàn trước. Trải nghiệm vị giác độc đáo trong không gian phi hành tinh duy nhất tại Sài Gòn.</p>
+                <a href="news-detail.html" class="btn-rect">XEM THÊM</a>
+            </div>
+        </article>
+
+        <!-- Article 3 (Odd: Image Left) -->
+        <article class="news-article" data-aos="fade-up">
+            <div class="news-img-box">
+                <div class="news-img-inner">
+                    <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                </div>
+            </div>
+            <div class="news-content">
+                <h3>LADIES NIGHT: DẠ TIỆC CỦA CÁC BÓNG HỒNG</h3>
+                <p>Thứ 4 hàng tuần là đêm vinh danh phái đẹp. Tặng ngay 1 tháp Cocktail và set trang trí bàn miễn phí cho nhóm từ 4 khách nữ. Lên đồ rực rỡ và đến 909 thả dáng nhận quà ngay.</p>
+                <a href="news-detail.html" class="btn-rect">XEM THÊM</a>
+            </div>
+        </article>
+    </div>
+
+    <div style="height: 100px;"></div>
+
+    <div class="floating-actions">
+        <a href="https://zalo.me/0123456789" target="_blank" class="float-btn zalo-btn"><strong>Zalo</strong></a>
+        <a href="#" class="float-btn chat-btn"><i class="fab fa-facebook-messenger"></i></a>
+        <a href="#" class="float-btn up-btn" id="scrollTopBtn"><i class="fas fa-chevron-up"></i></a>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 100 });
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) scrollTopBtn.classList.add('show');
+            else scrollTopBtn.classList.remove('show');
+        });
+        scrollTopBtn.addEventListener('click', (e) => {
+            e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

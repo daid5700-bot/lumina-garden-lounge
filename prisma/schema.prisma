@@ -1,0 +1,188 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SiteSetting {
+  id             String            @id @default("main")
+  siteName       String            @default("909 Lumina Garden Lounge")
+  logoImage      String?
+  heroImage      String            @db.Text
+  heroVideo      String?           @db.Text
+  phone          String
+  zalo           String
+  messenger      String?
+  email          String?
+  address        String
+  mapUrl         String?           @db.Text
+  openingHours   String
+  facebook       String?
+  instagram      String?
+  updatedAt      DateTime          @updatedAt
+  translations   SiteTranslation[]
+}
+
+model SiteTranslation {
+  id                 String      @id @default(cuid())
+  siteId             String
+  locale             String      @db.VarChar(5)
+  seoTitle           String
+  seoDescription     String      @db.Text
+  heroEyebrow        String
+  heroTitle          String
+  heroSubtitle       String      @db.Text
+  aboutTitle         String
+  aboutHeading       String
+  aboutBody          String      @db.Text
+  aboutBodySecondary String      @db.Text
+  aboutFeatureOne    String
+  aboutFeatureTwo    String
+  aboutFeatureThree  String
+  featureOneTitle    String
+  featureOneBody     String      @db.Text
+  featureTwoTitle    String
+  featureTwoBody     String      @db.Text
+  featureThreeTitle  String
+  featureThreeBody   String      @db.Text
+  contactTitle       String
+  contactDescription String      @db.Text
+  site               SiteSetting @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@unique([siteId, locale])
+  @@index([locale])
+}
+
+model MenuCategory {
+  id           String                    @id @default(cuid())
+  slug         String                    @unique
+  sortOrder    Int                       @default(0)
+  active       Boolean                   @default(true)
+  translations MenuCategoryTranslation[]
+  items        MenuItem[]
+}
+
+model MenuCategoryTranslation {
+  id         String       @id @default(cuid())
+  categoryId String
+  locale     String       @db.VarChar(5)
+  name       String
+  category   MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, locale])
+}
+
+model MenuItem {
+  id           String                @id @default(cuid())
+  categoryId   String
+  image        String?               @db.Text
+  price        Decimal               @db.Decimal(12, 0)
+  currency     String                @default("VND")
+  featured     Boolean               @default(false)
+  active       Boolean               @default(true)
+  sortOrder    Int                   @default(0)
+  category     MenuCategory          @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  translations MenuItemTranslation[]
+
+  @@index([categoryId, active, sortOrder])
+}
+
+model MenuItemTranslation {
+  id          String   @id @default(cuid())
+  menuItemId  String
+  locale      String   @db.VarChar(5)
+  name        String
+  description String?  @db.Text
+  item        MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@unique([menuItemId, locale])
+}
+
+model MenuPage {
+  id        String  @id @default(cuid())
+  image     String  @db.Text
+  alt       String
+  sortOrder Int     @default(0)
+  active    Boolean @default(true)
+}
+
+model GalleryItem {
+  id           String                   @id @default(cuid())
+  image        String                   @db.Text
+  sortOrder    Int                      @default(0)
+  active       Boolean                  @default(true)
+  translations GalleryItemTranslation[]
+}
+
+model GalleryItemTranslation {
+  id        String      @id @default(cuid())
+  galleryId String
+  locale    String      @db.VarChar(5)
+  title     String
+  alt       String
+  item      GalleryItem @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+
+  @@unique([galleryId, locale])
+}
+
+model Post {
+  id           String            @id @default(cuid())
+  slug         String            @unique
+  coverImage   String            @db.Text
+  published    Boolean           @default(false)
+  featured     Boolean           @default(false)
+  publishedAt  DateTime?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  translations PostTranslation[]
+
+  @@index([published, publishedAt])
+}
+
+model PostTranslation {
+  id              String @id @default(cuid())
+  postId          String
+  locale          String @db.VarChar(5)
+  title           String
+  excerpt         String @db.Text
+  content         String @db.LongText
+  metaTitle       String?
+  metaDescription String? @db.Text
+  post            Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, locale])
+}
+
+model Booking {
+  id        String        @id @default(cuid())
+  name      String
+  phone     String
+  guests    Int
+  date      DateTime
+  note      String?       @db.Text
+  locale    String        @db.VarChar(5)
+  status    BookingStatus @default(NEW)
+  createdAt DateTime      @default(now())
+
+  @@index([status, date])
+}
+
+enum BookingStatus {
+  NEW
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
