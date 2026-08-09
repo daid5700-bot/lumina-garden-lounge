@@ -14,6 +14,7 @@ export function Header({ locale, siteName }: { locale: Locale; siteName: string 
   const pathname = usePathname();
   const t = ui[locale];
   const isHome = pathname === `/${locale}`;
+  const closeMenu = () => setOpen(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -28,20 +29,20 @@ export function Header({ locale, siteName }: { locale: Locale; siteName: string 
     <header className={`header ${!isHome || scrolled ? "scrolled" : ""} ${open ? "mobile-open" : ""}`}>
       <div className="nav-container">
         <ul className="nav-links left-links">
-          <li><Link href={`/${locale}`} className={isHome ? "active" : ""}>{t.nav.home}</Link></li>
-          <li><Link href={`/${locale}#about`}>{t.nav.about}</Link></li>
-          <li><Link href={`/${locale}/menu`} className={pathname === `/${locale}/menu` ? "active" : ""}>{t.nav.menu}</Link></li>
+          <li><Link href={`/${locale}`} onClick={closeMenu} className={isHome ? "active" : ""}>{t.nav.home}</Link></li>
+          <li><Link href={`/${locale}#about`} onClick={closeMenu}>{t.nav.about}</Link></li>
+          <li><Link href={`/${locale}/menu`} onClick={closeMenu} className={pathname === `/${locale}/menu` ? "active" : ""}>{t.nav.menu}</Link></li>
         </ul>
         <div className="logo">
-          <Link href={`/${locale}`} aria-label={siteName}>
+          <Link href={`/${locale}`} onClick={closeMenu} aria-label={siteName}>
             <h1><span>909</span> LUMINA</h1>
             <p>GARDEN LOUNGE</p>
           </Link>
         </div>
         <ul className="nav-links right-links">
-          <li><Link href={`/${locale}/gallery`} className={pathname === `/${locale}/gallery` ? "active" : ""}>{t.nav.gallery}</Link></li>
-          <li><Link href={`/${locale}/news`} className={pathname.startsWith(`/${locale}/news`) ? "active" : ""}>{t.nav.news}</Link></li>
-          <li><Link href={`/${locale}#booking`}>{t.nav.contact}</Link></li>
+          <li><Link href={`/${locale}/gallery`} onClick={closeMenu} className={pathname === `/${locale}/gallery` ? "active" : ""}>{t.nav.gallery}</Link></li>
+          <li><Link href={`/${locale}/news`} onClick={closeMenu} className={pathname.startsWith(`/${locale}/news`) ? "active" : ""}>{t.nav.news}</Link></li>
+          <li><Link href={`/${locale}#booking`} onClick={closeMenu}>{t.nav.contact}</Link></li>
         </ul>
         <div className="legacy-language-switcher"><LanguageSwitcher current={locale} /></div>
       </div>
