@@ -10,41 +10,43 @@ export default async function AdminMenuPage() {
   let pages: any[] = [];
   let ready = Boolean(process.env.DATABASE_URL);
   if (ready) try {
-    pages = await prisma.menuPage.findMany({ orderBy: { sortOrder: "asc" } });
+    pages = await prisma.menuPage.findMany({ orderBy: [{ menuType: "asc" }, { sortOrder: "asc" }] });
   } catch {
     ready = false;
   }
 
   return (
-    <AdminShell title="Quản lý thực đơn" description="Thêm, thay hoặc xoá các ảnh menu hiển thị cho khách.">
-      {!ready && <div className="admin-alert warning">Cần kết nối MySQL để quản lý thực đơn.</div>}
+    <AdminShell title="Quản lý thực đơn" description="Đăng ảnh riêng cho Menu Lounge và Menu Garden.">
+      {!ready && <div className="admin-alert warning">Cần kết nối cơ sở dữ liệu để quản lý thực đơn.</div>}
       <section className="admin-panel">
         <div className="admin-panel-heading">
           <div><h2>Ảnh menu</h2><p>{pages.length} ảnh menu đang hiển thị</p></div>
         </div>
-        
-        <div style={{ marginBottom: "30px" }}>
-          <MenuUploadForm sortOrder={pages.length} disabled={!ready} />
-        </div>
-
-        <div className="admin-subheading" style={{ marginTop: 0, paddingTop: "24px" }}>
-          <h3 style={{ margin: "0 0 20px", fontSize: "1rem", color: "#101828" }}>Danh sách ảnh hiện tại</h3>
-        </div>
-        <div className="admin-menu-grid">
-          {pages.map((page) => <MenuCard page={page} key={page.id} />)}
-        </div>
+        <MenuGroup title="Menu Lounge" menuType="LOUNGE" pages={pages.filter((page) => page.menuType !== "GARDEN")} disabled={!ready} />
+        <MenuGroup title="Menu Garden" menuType="GARDEN" pages={pages.filter((page) => page.menuType === "GARDEN")} disabled={!ready} />
       </section>
     </AdminShell>
   );
 }
 
-function MenuUploadForm({ sortOrder, disabled }: { sortOrder: number; disabled: boolean }) {
+function MenuGroup({ title, menuType, pages, disabled }: { title: string; menuType: "LOUNGE" | "GARDEN"; pages: any[]; disabled: boolean }) {
   return (
-    <form action={upsertMenuPageAction} className="admin-form" style={{ padding: "20px", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "12px" }}>
+    <section className="admin-menu-group">
+      <div className="admin-menu-group-heading"><div><h3>{title}</h3><p>{pages.length} ảnh</p></div></div>
+      <MenuUploadForm sortOrder={pages.length} menuType={menuType} disabled={disabled} />
+      {pages.length > 0 && <div className="admin-menu-grid">{pages.map((page) => <MenuCard page={page} key={page.id} />)}</div>}
+    </section>
+  );
+}
+
+function MenuUploadForm({ sortOrder, menuType, disabled }: { sortOrder: number; menuType: "LOUNGE" | "GARDEN"; disabled: boolean }) {
+  return (
+    <form action={upsertMenuPageAction} className="admin-menu-upload">
       <input type="hidden" name="sortOrder" value={sortOrder} />
       <input type="hidden" name="active" value="on" />
+      <input type="hidden" name="menuType" value={menuType} />
       <AdminImagePicker alt="Ảnh menu xem trước" fileName="imageFile" fileLabel="Chọn ảnh từ máy tính để thêm vào thực đơn" required disabled={disabled} />
-      <button className="admin-primary-button" disabled={disabled} style={{ minHeight: "46px", padding: "0 24px", marginTop: "16px" }}>Đăng ảnh mới</button>
+      <button className="admin-primary-button" disabled={disabled}>Đăng ảnh vào {menuType === "LOUNGE" ? "Menu Lounge" : "Menu Garden"}</button>
     </form>
   );
 }
@@ -57,6 +59,13 @@ function MenuCard({ page }: { page: any }) {
       <input type="hidden" name="sortOrder" value={page.sortOrder} />
       <input type="hidden" name="active" value="on" />
       <AdminImagePicker currentImage={page.image} alt="Ảnh menu" fileName="imageFile" fileLabel="Thay ảnh" compact />
+      <label className="admin-menu-type">
+        <span>Hiển thị trong</span>
+        <select name="menuType" defaultValue={page.menuType === "GARDEN" ? "GARDEN" : "LOUNGE"}>
+          <option value="LOUNGE">Menu Lounge</option>
+          <option value="GARDEN">Menu Garden</option>
+        </select>
+      </label>
       <div className="admin-gallery-actions">
         <button className="admin-primary-button">Lưu ảnh mới</button>
         <DeleteButton action={deleteMenuPageAction} label="Xoá ảnh" />

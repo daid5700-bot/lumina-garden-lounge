@@ -116,8 +116,11 @@ model MenuPage {
   id        String  @id @default(cuid())
   image     String  @db.Text
   alt       String
+  menuType  String  @default("LOUNGE") @db.VarChar(16)
   sortOrder Int     @default(0)
   active    Boolean @default(true)
+
+  @@index([menuType, active, sortOrder])
 }
 
 model GalleryItem {

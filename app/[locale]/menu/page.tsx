@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import { MenuImagePager } from "@/components/public/MenuImagePager";
 import { getMenu } from "@/lib/content";
 import { isLocale } from "@/lib/i18n";
 import { legacyCopy } from "@/lib/legacy-copy";
@@ -26,20 +26,7 @@ export default async function MenuPage({ params }: { params: Promise<{ locale: s
         {legacyCopy[locale].menuTitle.join(" ")}
       </h1>
       <div className="menu-wrapper" data-aos="zoom-in">
-        <div className="menu-image-grid">
-          {menu.pages.map((page) => (
-            <Image
-              key={page.id}
-              src={page.image}
-              alt={page.alt}
-              className="menu-page-img"
-              width={900}
-              height={1350}
-              sizes="(max-width: 768px) calc(100vw - 70px), 40vw"
-              priority={page.sortOrder <= 2}
-            />
-          ))}
-        </div>
+        <MenuImagePager pages={menu.pages} />
       </div>
       <div className="legacy-page-spacer" />
     </div>

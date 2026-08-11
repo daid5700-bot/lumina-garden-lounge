@@ -240,6 +240,47 @@
   cursor: pointer;
 }
 
+.public-site .floating-actions .contact-float {
+  width: 56px;
+  min-width: 56px;
+  height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.34);
+}
+
+.public-site .floating-actions .zalo-btn {
+  width: 78px;
+  min-width: 78px;
+  border-color: #59a6ff;
+  background: #0879e8;
+}
+
+.public-site .floating-actions .phone-btn {
+  border-color: #ff84dc;
+  background: linear-gradient(135deg, #d300a5, #ff3ca3);
+}
+
+.public-site .floating-actions .contact-float:hover {
+  color: #fff;
+  transform: translateX(-4px);
+  filter: brightness(1.12);
+}
+
+.public-site .floating-actions .phone-btn svg {
+  width: 21px;
+  height: 21px;
+  flex: 0 0 21px;
+}
+
 .public-site .features-list svg {
   width: 20px;
   height: 20px;
@@ -763,11 +804,15 @@
   .public-site .legacy-menu-page .menu-wrapper {
     width: auto;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    border: 0;
+    border-image: none;
+    box-shadow: none;
+    background: transparent;
   }
 
   .public-site .legacy-menu-page .menu-image-grid {
-    grid-template-columns: 1fr;
+    display: flex;
   }
 
   .public-site .page-header-title {
@@ -1001,6 +1046,18 @@
     height: 46px;
   }
 
+  .public-site .floating-actions .contact-float {
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    padding: 0;
+  }
+
+  .public-site .floating-actions .zalo-btn {
+    width: 72px;
+    min-width: 72px;
+  }
+
   .public-site .mobile-menu-btn {
     top: 14px;
     right: 12px;
@@ -1051,7 +1108,7 @@
   .public-site .legacy-menu-page .menu-wrapper {
     margin-right: 0;
     margin-left: 0;
-    padding: 14px;
+    padding: 0;
   }
 
   .public-site .logo {
@@ -1110,9 +1167,9 @@
   max-width: 100%;
   max-height: 90vh;
   object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
-  border: 1px solid var(--primary-cyan);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .lightbox-close {

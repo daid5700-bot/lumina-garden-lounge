@@ -49,11 +49,14 @@ export const getSiteContent = cache(async (locale: Locale): Promise<SiteContent>
   }
 });
 
-export const getMenu = cache(async (locale: Locale): Promise<{ categories: PublicMenuCategory[]; items: PublicMenuItem[]; pages: { id: string; image: string; alt: string; sortOrder: number }[] }> => {
+export type PublicMenuPage = { id: string; image: string; alt: string; menuType: "LOUNGE" | "GARDEN"; sortOrder: number };
+
+export const getMenu = cache(async (locale: Locale): Promise<{ categories: PublicMenuCategory[]; items: PublicMenuItem[]; pages: PublicMenuPage[] }> => {
+  const fallbackPages: PublicMenuPage[] = defaultMenuPages.map((page) => ({ ...page, menuType: "LOUNGE" }));
   const fallback = {
     categories: defaultCategories.map((category) => ({ ...category, name: category.name[locale] })),
     items: defaultMenuItems.map((item) => ({ ...item, name: item.name[locale], description: item.description[locale], currency: "VND" })),
-    pages: defaultMenuPages
+    pages: fallbackPages
   };
   if (!process.env.DATABASE_URL) return fallback;
   try {
@@ -66,7 +69,7 @@ export const getMenu = cache(async (locale: Locale): Promise<{ categories: Publi
     return {
       categories: categories.map((category) => ({ id: category.id, slug: category.slug, name: category.translations[0]?.name ?? category.slug, sortOrder: category.sortOrder })),
       items: items.map((item) => ({ id: item.id, categoryId: item.categoryId, image: item.image, price: Number(item.price), currency: item.currency, featured: item.featured, sortOrder: item.sortOrder, name: item.translations[0]?.name ?? "", description: item.translations[0]?.description ?? "" })),
-      pages: pages.length ? pages : fallback.pages
+      pages: pages.length ? pages.map((page) => ({ ...page, menuType: page.menuType === "GARDEN" ? "GARDEN" : "LOUNGE" })) : fallback.pages
     };
   } catch (error) {
     console.error("Using fallback menu:", error);

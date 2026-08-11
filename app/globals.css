@@ -454,6 +454,14 @@ img { max-width: 100%; }
 .admin-menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
 .admin-menu-card { min-width: 0; display: grid; gap: 12px; padding: 12px; border: 1px solid #dfe5ed; border-radius: 12px; background: #fafbfc; }
 .admin-menu-card > img { width: 100%; aspect-ratio: 2 / 3; border-radius: 8px; background: #e8edf3; object-fit: cover; }
+.admin-menu-group { display: grid; gap: 18px; padding: 26px 0; border-top: 1px solid #e4e8ee; }
+.admin-menu-group + .admin-menu-group { margin-top: 10px; }
+.admin-menu-group-heading h3 { margin: 0; color: #101828; font-size: 1.08rem; }
+.admin-menu-group-heading p { margin: 4px 0 0; color: #667085; font-size: .85rem; }
+.admin-menu-upload { display: grid; gap: 16px; padding: 20px; border: 1px dashed #aeb8c6; border-radius: 12px; background: #f8fafc; }
+.admin-menu-upload .admin-primary-button { justify-self: start; min-height: 46px; padding: 0 24px; }
+.admin-menu-type { display: grid; gap: 6px; color: #475467; font-size: .78rem; font-weight: 700; }
+.admin-menu-type select { min-height: 40px; border: 1px solid #d0d5dd; border-radius: 8px; background: #fff; color: #172033; padding: 0 10px; }
 .admin-language-block { padding: 17px; display: grid; gap: 12px; border: 1px solid #e3e7ed; border-radius: 10px; background: #fafbfc; }
 .admin-language-block h4 { margin: 0; color: #087f8b; font-size: .76rem; }
 .admin-language-block.admin-full { padding: 22px; }

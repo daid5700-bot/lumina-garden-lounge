@@ -68,7 +68,8 @@ export async function deleteMenuItemAction(data: FormData) { await requireAdmin(
 export async function upsertMenuPageAction(data: FormData) {
   await requireAdmin();
   const id = text(data, "id"); const image = await imageValue(data);
-  const base = { image, alt: text(data, "alt") || "Menu page", sortOrder: Number(text(data, "sortOrder") || 0), active: checked(data, "active") };
+  const menuType = text(data, "menuType") === "GARDEN" ? "GARDEN" : "LOUNGE";
+  const base = { image, alt: text(data, "alt") || "Menu page", menuType, sortOrder: Number(text(data, "sortOrder") || 0), active: checked(data, "active") };
   if (id) await prisma.menuPage.update({ where: { id }, data: base }); else await prisma.menuPage.create({ data: base });
   revalidatePublic(); revalidatePath("/admin/menu");
 }

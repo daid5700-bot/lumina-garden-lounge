@@ -56,7 +56,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       <Header locale={rawLocale} siteName={site.siteName} />
       <LegacyAos />
       <main id="main-content" tabIndex={-1}>{children}</main>
-      <FloatingActions messenger={site.messenger} zalo={site.zalo} />
+      <FloatingActions phone={site.phone} zalo={site.zalo} />
     </div>
   );
 }

@@ -1127,6 +1127,49 @@ ul {
     box-shadow: inset 0 0 20px rgba(255,0,255,0.2), 0 0 20px rgba(0,243,255,0.2);
     background: rgba(10, 10, 15, 0.6);
 }
+.menu-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 300px));
+    justify-content: center;
+    gap: 14px;
+    margin: 0 auto 38px;
+}
+.menu-tab {
+    min-height: 52px;
+    padding: 10px 22px;
+    border: 2px solid rgba(0, 243, 255, 0.62);
+    border-radius: 12px;
+    background: rgba(6, 1, 18, 0.74);
+    box-shadow: 0 0 14px rgba(0, 243, 255, 0.22);
+    color: var(--text-main);
+    cursor: pointer;
+    font: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.menu-tab:hover,
+.menu-tab:focus-visible,
+.menu-tab.active {
+    border-color: var(--primary-magenta);
+    background: rgba(157, 0, 255, 0.3);
+    box-shadow: var(--glow-magenta);
+    outline: none;
+}
+.menu-tab:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.menu-tab:hover { transform: translateY(-2px); }
+.menu-empty-state {
+    min-height: 220px;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    border: 1px dashed rgba(0, 243, 255, 0.45);
+    border-radius: 14px;
+    color: var(--text-muted);
+    font-size: 16px;
+    text-align: center;
+}
 .menu-image-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1201,6 +1244,34 @@ ul {
     .menu-image-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
-    .menu-image-grid { grid-template-columns: 1fr; }
-    .menu-wrapper { width: auto; margin: 0; padding: 20px; }
+    .menu-wrapper {
+        width: auto;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-image: none;
+        box-shadow: none;
+        background: transparent;
+    }
+    .menu-image-grid {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        padding: 0 0 12px;
+        scroll-snap-type: x mandatory;
+        overscroll-behavior-x: contain;
+        scrollbar-width: thin;
+        scrollbar-color: var(--primary-cyan) rgba(255, 255, 255, 0.12);
+        -webkit-overflow-scrolling: touch;
+    }
+    .menu-page-img {
+        width: min(82vw, 360px);
+        max-width: none;
+        flex: 0 0 min(82vw, 360px);
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+    }
+    .menu-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0 12px 24px; }
+    .menu-tab { min-height: 48px; padding: 8px 10px; border-radius: 10px; font-size: 14px; }
+    .menu-empty-state { min-height: 160px; padding: 20px; font-size: 14px; }
 }
