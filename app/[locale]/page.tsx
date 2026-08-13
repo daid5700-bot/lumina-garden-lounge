@@ -34,7 +34,7 @@ export default async function HomePage({
   const contactLead = contactWords.splice(0, 2).join(" ");
   const contactHighlight = contactWords.splice(0, 2).join(" ");
   const contactTail = contactWords.join(" ");
-  const zaloUrl = site.zalo.startsWith("http") ? site.zalo : `https://zalo.me/${site.zalo}`;
+  const zaloUrl = site.zalo.startsWith("http") ? site.zalo : `https://zalo.me/${site.zalo.replace(/\D/g, "")}`;
   const zaloDigits = site.zalo.replace(/\D/g, "");
   const zaloDisplay = zaloDigits.length === 10
     ? `${zaloDigits.slice(0, 4)}.${zaloDigits.slice(4, 7)}.${zaloDigits.slice(7)}`

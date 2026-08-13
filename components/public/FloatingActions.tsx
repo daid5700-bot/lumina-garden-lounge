@@ -11,7 +11,7 @@ export function FloatingActions({ phone, zalo }: { phone: string; zalo: string }
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  const zaloUrl = zalo.startsWith("http") ? zalo : `https://zalo.me/${zalo}`;
+  const zaloUrl = zalo.startsWith("http") ? zalo : `https://zalo.me/${zalo.replace(/\D/g, "")}`;
   return (
     <div className="floating-actions" aria-label="Quick contact">
       <a href={zaloUrl} target="_blank" rel="noreferrer" className="float-btn contact-float zalo-btn" aria-label="Chat qua Zalo">
