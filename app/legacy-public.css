@@ -258,8 +258,8 @@
 }
 
 .public-site .floating-actions .zalo-btn {
-  width: 78px;
-  min-width: 78px;
+  width: 56px;
+  min-width: 56px;
   border-color: #59a6ff;
   background: #0879e8;
 }
@@ -1054,8 +1054,8 @@
   }
 
   .public-site .floating-actions .zalo-btn {
-    width: 72px;
-    min-width: 72px;
+    width: 50px;
+    min-width: 50px;
   }
 
   .public-site .mobile-menu-btn {
