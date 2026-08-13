@@ -186,7 +186,7 @@ export default async function HomePage({
               <p>{site.translation.contactDescription}</p>
               <div className="contact-methods">
                 <a href={zaloUrl} target="_blank" rel="noreferrer" className="zalo-contact-card">
-                  <div className="zalo-icon-wrap"><strong>Zalo</strong></div>
+                  <div className="zalo-icon-wrap"><Image src="/icon/zalo.png" alt="" width={447} height={447} sizes="50px" /></div>
                   <div className="zalo-text"><h4>{copy.zaloLabel}</h4><p>{zaloDisplay}</p></div>
                 </a>
                 <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hotline-card">

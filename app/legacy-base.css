@@ -694,6 +694,14 @@ ul {
     align-items: center;
     font-size: 14px;
     color: white;
+    overflow: hidden;
+    padding: 0;
+}
+
+.zalo-icon-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .hotline-card i {
