@@ -7,6 +7,7 @@ export type SiteContent = {
   siteName: string;
   logoImage: string | null;
   heroImage: string;
+  aboutImage: string;
   heroVideo: string | null;
   phone: string;
   zalo: string;
@@ -46,6 +47,7 @@ export const siteBase = {
   siteName: "909 Lumina Garden Lounge",
   logoImage: null,
   heroImage: "https://images.unsplash.com/photo-1563841930606-67e2bce48b78?auto=format&fit=crop&w=1920&q=86",
+  aboutImage: "/intro.jpg",
   heroVideo: null,
   phone: "0987 654 321",
   zalo: "0123456789",

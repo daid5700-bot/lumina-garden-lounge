@@ -1,0 +1,65 @@
+name: Backup Supabase database
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 19 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: supabase-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL }}
+      KEEP_BACKUPS: 14
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install --yes postgresql-client
+
+      - name: Create database dump
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$SUPABASE_DATABASE_URL" ]; then
+            echo "Missing GitHub secret: SUPABASE_DATABASE_URL"
+            exit 1
+          fi
+
+          backup_dir="backups/supabase"
+          backup_file="$backup_dir/supabase-$(date -u +'%Y-%m-%dT%H-%M-%SZ').dump"
+          mkdir -p "$backup_dir"
+          pg_dump "$SUPABASE_DATABASE_URL" \
+            --format=custom \
+            --no-owner \
+            --no-privileges \
+            --file="$backup_file"
+
+          mapfile -t old_backups < <(ls -1t "$backup_dir"/*.dump 2>/dev/null | tail -n +$((KEEP_BACKUPS + 1)) || true)
+          if [ "${#old_backups[@]}" -gt 0 ]; then
+            rm -f "${old_backups[@]}"
+          fi
+
+      - name: Commit backup to GitHub
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add backups/supabase
+          if git diff --cached --quiet; then
+            echo "No database backup changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: backup Supabase database"
+          git push

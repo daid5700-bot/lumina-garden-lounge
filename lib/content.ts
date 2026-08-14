@@ -31,6 +31,7 @@ export const getSiteContent = cache(async (locale: Locale): Promise<SiteContent>
       siteName: site.siteName,
       logoImage: site.logoImage,
       heroImage: site.heroImage,
+      aboutImage: site.aboutImage,
       heroVideo: site.heroVideo,
       phone: site.phone,
       zalo: site.zalo,

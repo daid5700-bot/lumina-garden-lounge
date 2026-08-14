@@ -23,6 +23,7 @@ model SiteSetting {
   siteName       String            @default("909 Lumina Garden Lounge")
   logoImage      String?
   heroImage      String            @db.Text
+  aboutImage     String            @default("/intro.jpg") @db.Text
   heroVideo      String?           @db.Text
   phone          String
   zalo           String

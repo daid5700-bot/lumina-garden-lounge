@@ -29,10 +29,11 @@ function revalidatePublic() {
 export async function updateSiteAction(data: FormData) {
   await requireAdmin();
   const heroImage = await imageValue(data, "heroImage");
+  const aboutImage = await imageValue(data, "aboutImage");
   await prisma.siteSetting.upsert({
     where: { id: "main" },
-    create: { id: "main", siteName: text(data, "siteName"), heroImage, heroVideo: text(data, "heroVideo") || null, phone: text(data, "phone"), zalo: text(data, "zalo"), messenger: text(data, "messenger") || null, email: text(data, "email") || null, address: text(data, "address"), mapUrl: text(data, "mapUrl") || null, openingHours: text(data, "openingHours"), facebook: text(data, "facebook") || null, instagram: text(data, "instagram") || null },
-    update: { siteName: text(data, "siteName"), heroImage, heroVideo: text(data, "heroVideo") || null, phone: text(data, "phone"), zalo: text(data, "zalo"), messenger: text(data, "messenger") || null, email: text(data, "email") || null, address: text(data, "address"), mapUrl: text(data, "mapUrl") || null, openingHours: text(data, "openingHours"), facebook: text(data, "facebook") || null, instagram: text(data, "instagram") || null }
+    create: { id: "main", siteName: text(data, "siteName"), heroImage, aboutImage, heroVideo: text(data, "heroVideo") || null, phone: text(data, "phone"), zalo: text(data, "zalo"), messenger: text(data, "messenger") || null, email: text(data, "email") || null, address: text(data, "address"), mapUrl: text(data, "mapUrl") || null, openingHours: text(data, "openingHours"), facebook: text(data, "facebook") || null, instagram: text(data, "instagram") || null },
+    update: { siteName: text(data, "siteName"), heroImage, aboutImage, heroVideo: text(data, "heroVideo") || null, phone: text(data, "phone"), zalo: text(data, "zalo"), messenger: text(data, "messenger") || null, email: text(data, "email") || null, address: text(data, "address"), mapUrl: text(data, "mapUrl") || null, openingHours: text(data, "openingHours"), facebook: text(data, "facebook") || null, instagram: text(data, "instagram") || null }
   });
   const keys = ["seoTitle", "seoDescription", "heroEyebrow", "heroTitle", "heroSubtitle", "aboutTitle", "aboutHeading", "aboutBody", "aboutBodySecondary", "aboutFeatureOne", "aboutFeatureTwo", "aboutFeatureThree", "featureOneTitle", "featureOneBody", "featureTwoTitle", "featureTwoBody", "featureThreeTitle", "featureThreeBody", "contactTitle", "contactDescription"] as const;
   await Promise.all(locales.map((locale) => {

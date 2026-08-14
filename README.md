@@ -48,3 +48,12 @@ Trên Vercel cần thêm cả `DATABASE_URL` và `DIRECT_URL`; Supavisor Transac
 - Trên Vercel Firewall, tạo rate-limit theo IP cho `/admin/login` (10 request / 15 phút) và các Server Actions booking; bật Attack Challenge Mode khi có dấu hiệu bị bot tấn công.
 - Giữ `AUTH_SECRET`, `DATABASE_URL`, `DIRECT_URL` và `R2_API_TOKEN` chỉ trong Environment Variables, không đưa vào Git hay client-side code.
 - Website đã có CSP, HSTS, chặn iframe/clickjacking và giới hạn 8MB cho request upload.
+
+## Sao lưu Supabase lên GitHub
+
+Workflow `.github/workflows/supabase-backup.yml` tạo một bản dump PostgreSQL mỗi ngày lúc 02:00 giờ Việt Nam, hoặc chạy thủ công trong tab **Actions**. Workflow giữ 14 bản mới nhất tại `backups/supabase/` và commit chúng vào repository.
+
+1. Để repository ở chế độ **private** vì database dump chứa dữ liệu thật.
+2. Vào GitHub repository → **Settings** → **Secrets and variables** → **Actions** → tạo secret `SUPABASE_DATABASE_URL`.
+3. Giá trị secret là connection string direct/session pooler của Supabase, ví dụ `postgresql://postgres:...@db.<project-ref>.supabase.co:5432/postgres?sslmode=require`.
+4. Vào **Actions** → **Backup Supabase database** → **Run workflow** để chạy backup đầu tiên.

@@ -127,7 +127,7 @@ export default async function HomePage({
           <div className="about-grid">
             <div className="about-image glowing-box" data-aos="fade-right" data-aos-duration="1200">
               <Image
-                src="https://images.unsplash.com/photo-1566737236500-c8ac43014a67?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                src={site.aboutImage}
                 alt={site.siteName}
                 width={800}
                 height={533}
