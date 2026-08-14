@@ -25,7 +25,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install PostgreSQL client
-        run: sudo apt-get update && sudo apt-get install --yes postgresql-client
+        run: sudo apt-get update && sudo apt-get install --yes postgresql-client-17
 
       - name: Create database dump
         shell: bash
