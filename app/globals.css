@@ -518,12 +518,16 @@ img { max-width: 100%; }
 
 @media (max-width: 720px) {
   .admin-app { display: block; }
-  .admin-sidebar { position: static; width: 100%; height: auto; padding: 14px; flex-direction: row; align-items: center; overflow-x: auto; }
-  .admin-logo { margin: 0 15px 0 0; }
-  .admin-sidebar nav { display: flex; }
-  .admin-sidebar nav a { width: 44px; min-width: 44px; }
-  .admin-user { margin: 0 0 0 auto; padding: 0 0 0 10px; border: 0; }
-  .admin-main { padding: 28px 15px 60px; }
+  .admin-sidebar { position: sticky; top: 0; z-index: 50; width: 100%; height: auto; padding: 10px 12px; flex-direction: row; align-items: center; gap: 10px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,.28); }
+  .admin-logo { min-width: 78px; margin: 0; font-size: .9rem !important; }
+  .admin-logo small { display: none; }
+  .admin-sidebar nav { display: flex; flex: 1; gap: 7px; overflow-x: auto; scrollbar-width: none; }
+  .admin-sidebar nav::-webkit-scrollbar { display: none; }
+  .admin-sidebar nav a, .admin-sidebar nav a:not(:hover) { width: auto; min-width: max-content; min-height: 44px; padding: 0 12px; justify-content: flex-start; font-size: .75rem; }
+  .admin-sidebar nav a svg { width: 18px; flex: 0 0 18px; }
+  .admin-user { margin: 0; padding: 0; border: 0; }
+  .admin-user button { width: 44px; height: 44px; }
+  .admin-main { padding: 24px 16px calc(60px + env(safe-area-inset-bottom)); }
   .admin-page-header { align-items: flex-start; }
   .admin-view-site { display: none; }
   .admin-stats { grid-template-columns: 1fr; }
@@ -532,7 +536,15 @@ img { max-width: 100%; }
   .admin-panel { padding: 18px 14px; }
   .admin-panel-heading { align-items: flex-start; flex-direction: column; }
   .admin-panel-heading .admin-primary-button { width: 100%; }
+  .admin-form input, .admin-form textarea, .admin-form select, .admin-editor-form input, .admin-editor-form textarea, .admin-editor-form select { font-size: 16px; }
   .admin-editor-form { padding: 18px 12px; }
+  .admin-editor-actions { flex-direction: column; }
+  .admin-editor-actions button { width: 100%; min-height: 44px; }
+  .status-form { min-width: 0; flex-wrap: wrap; }
+  .status-form select, .status-form button { min-height: 44px; }
+  .status-form select { flex: 1 1 150px; }
+  .status-form button { padding: 0 14px; }
+  .admin-gallery-grid, .admin-menu-grid { grid-template-columns: 1fr; }
   .admin-login-page { grid-template-columns: 1fr; }
   .admin-login-visual { display: none; }
   .admin-login-panel { min-height: 100vh; padding: 22px; }
