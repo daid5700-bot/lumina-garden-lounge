@@ -46,10 +46,12 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ loc
   const sidebarItems = [...related, ...(related.length < 3 ? [sidebarFallback] : [])].slice(0, 3);
   const isOriginalDjArticle = locale === "vi" && slug === "special-guest-dj-night";
   const articleJsonLd = { "@context": "https://schema.org", "@type": "NewsArticle", headline: post.title, description: post.excerpt, image: [post.coverImage], datePublished: post.publishedAt, dateModified: post.publishedAt, mainEntityOfPage: `${siteUrl()}/${locale}/news/${post.slug}`, author: { "@type": "Organization", name: "909 Lumina Garden Lounge" }, publisher: { "@type": "Organization", name: "909 Lumina Garden Lounge" } };
+  const breadcrumbJsonLd = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: t.nav.home, item: `${siteUrl()}/${locale}` }, { "@type": "ListItem", position: 2, name: t.nav.news, item: `${siteUrl()}/${locale}/news` }, { "@type": "ListItem", position: 3, name: post.title, item: `${siteUrl()}/${locale}/news/${post.slug}` }] };
 
   return (
     <div className="legacy-news-detail-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c") }} />
       <div className="breadcrumb" data-aos="fade-down">
         <Link href={`/${locale}`}>{t.nav.home}</Link> &gt;{" "}
         <Link href={`/${locale}/news`}>{t.nav.news}</Link> &gt; <span>{post.title}</span>

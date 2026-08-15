@@ -24,6 +24,7 @@ export function Footer({ locale, site }: { locale: Locale; site: SiteContent }) 
             <Link href={`/${locale}/menu`}>{t.nav.menu}</Link>
             <Link href={`/${locale}/gallery`}>{t.nav.gallery}</Link>
             <Link href={`/${locale}/news`}>{t.nav.news}</Link>
+            {locale === "vi" && <Link href="/vi/lounge-quan-5">Lounge Quận 5</Link>}
           </div>
         </div>
         <div>

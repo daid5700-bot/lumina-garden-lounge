@@ -51,7 +51,7 @@ Trên Vercel cần thêm cả `DATABASE_URL` và `DIRECT_URL`; Supavisor Transac
 
 ## Sao lưu Supabase lên GitHub
 
-Workflow `.github/workflows/supabase-backup.yml` tạo một bản dump PostgreSQL mỗi ngày lúc 02:00 giờ Việt Nam, hoặc chạy thủ công trong tab **Actions**. Workflow giữ 14 bản mới nhất tại `backups/supabase/` và commit chúng vào repository.
+Workflow `.github/workflows/supabase-backup.yml` tạo một bản dump PostgreSQL mỗi ngày lúc 02:00 giờ Việt Nam, hoặc chạy thủ công trong tab **Actions**. Workflow giữ 3 bản mới nhất tại `backups/supabase/` và commit chúng vào repository.
 
 1. Để repository ở chế độ **private** vì database dump chứa dữ liệu thật.
 2. Vào GitHub repository → **Settings** → **Secrets and variables** → **Actions** → tạo secret `SUPABASE_DATABASE_URL`.

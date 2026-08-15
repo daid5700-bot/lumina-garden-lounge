@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 import type { Locale } from "@/lib/i18n";
+import { seoPosts } from "@/lib/seo-posts";
 import {
   defaultCategories,
   defaultGallery,
@@ -93,11 +94,11 @@ export const getGallery = cache(async (locale: Locale): Promise<PublicGalleryIte
 
 export const getPosts = cache(async (locale: Locale): Promise<PublicPost[]> => {
   const fallback = defaultPosts.map((post) => ({ ...post, title: post.title[locale], excerpt: post.excerpt[locale], content: post.content[locale] }));
-  if (!process.env.DATABASE_URL) return fallback;
+  if (!process.env.DATABASE_URL) return [...seoPosts(locale), ...fallback];
   try {
     const posts = await prisma.post.findMany({ where: { published: true }, orderBy: { publishedAt: "desc" }, include: { translations: { where: { locale }, take: 1 } } });
-    if (!posts.length) return fallback;
-    return posts.map((post) => ({ id: post.id, slug: post.slug, coverImage: post.coverImage, publishedAt: (post.publishedAt ?? post.createdAt).toISOString(), featured: post.featured, title: post.translations[0]?.title ?? post.slug, excerpt: post.translations[0]?.excerpt ?? "", content: post.translations[0]?.content ?? "", metaTitle: post.translations[0]?.metaTitle, metaDescription: post.translations[0]?.metaDescription }));
+    if (!posts.length) return [...seoPosts(locale), ...fallback];
+    return [...seoPosts(locale), ...posts.map((post) => ({ id: post.id, slug: post.slug, coverImage: post.coverImage, publishedAt: (post.publishedAt ?? post.createdAt).toISOString(), featured: post.featured, title: post.translations[0]?.title ?? post.slug, excerpt: post.translations[0]?.excerpt ?? "", content: post.translations[0]?.content ?? "", metaTitle: post.translations[0]?.metaTitle, metaDescription: post.translations[0]?.metaDescription }))];
   } catch (error) {
     console.error("Using fallback posts:", error);
     return fallback;

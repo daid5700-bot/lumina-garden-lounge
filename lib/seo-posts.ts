@@ -1,0 +1,12 @@
+import type { Locale } from "@/lib/i18n";
+import type { PublicPost } from "@/lib/content";
+
+const publishedAt = "2026-08-15T00:00:00.000Z";
+
+export function seoPosts(locale: Locale): PublicPost[] {
+  if (locale !== "vi") return [];
+  return [
+    { id: "seo-lounge-garden-q5", slug: "lounge-san-vuon-quan-5", coverImage: "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1400&q=84", title: "Lounge sân vườn Quận 5: Chọn không gian cho một buổi tối trọn vẹn", excerpt: "Gợi ý những tiêu chí thực tế khi tìm một không gian lounge sân vườn để gặp gỡ, hẹn hò hoặc đi cùng nhóm bạn.", content: "Một lounge sân vườn phù hợp không chỉ nằm ở hình ảnh đẹp mà còn ở cảm giác thoải mái khi trò chuyện, lựa chọn đồ uống và cách không gian phục vụ buổi tối của bạn.\n\nTại 909 Lumina Garden Lounge, bạn có thể xem trước menu, thông tin liên hệ và các tin tức đang diễn ra trước khi lên kế hoạch. Với ngày cuối tuần hoặc nhóm đông người, liên hệ trước giúp việc sắp xếp chỗ ngồi chủ động hơn.\n\nKhám phá thêm không gian lounge tại Quận 5 và các sự kiện mới của 909 Lumina trên website.", publishedAt, featured: false, metaTitle: "Lounge sân vườn Quận 5 | 909 Lumina Garden Lounge", metaDescription: "Gợi ý chọn lounge sân vườn tại Quận 5 cho cuộc hẹn, gặp gỡ bạn bè và buổi tối cuối tuần." },
+    { id: "seo-nightlife-q5", slug: "dia-diem-di-choi-buoi-toi-quan-5", coverImage: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=84", title: "Địa điểm đi chơi buổi tối Quận 5: Lên kế hoạch cho cuộc hẹn và nhóm bạn", excerpt: "Một vài tiêu chí giúp chọn địa điểm đi chơi buổi tối phù hợp với cuộc hẹn, sinh nhật nhỏ hoặc buổi gặp cuối tuần.", content: "Khi chọn địa điểm đi chơi buổi tối, hãy cân nhắc không khí, sự thuận tiện khi di chuyển, menu và lịch hoạt động đang được công bố. Những yếu tố này giúp cuộc hẹn hoặc buổi gặp nhóm có trải nghiệm rõ ràng hơn.\n\n909 Lumina Garden Lounge là một lựa chọn để thưởng thức cocktail, âm nhạc và theo dõi các nội dung sự kiện tại Quận 5. Bạn có thể đặt bàn trước qua website hoặc liên hệ trực tiếp để được xác nhận.\n\nXem thêm trang lounge Quận 5 để biết thông tin tổng quan trước khi ghé thăm.", publishedAt, featured: false, metaTitle: "Địa điểm đi chơi buổi tối Quận 5 | 909 Lumina", metaDescription: "Gợi ý lên kế hoạch đi chơi buổi tối tại Quận 5: không gian, cocktail, âm nhạc và cách đặt bàn trước." }
+  ];
+}

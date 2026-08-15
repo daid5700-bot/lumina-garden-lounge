@@ -176,6 +176,18 @@
   object-fit: initial;
 }
 
+.public-site .seo-landing-inner { width: min(920px, calc(100% - 40px)); margin: 0 auto; padding: 145px 0 100px; color: var(--text-main); }
+.public-site .seo-landing-inner h1 { margin: 28px 0 22px; color: var(--primary-cyan); font-size: clamp(2.2rem, 5vw, 4.2rem); line-height: 1.15; }
+.public-site .seo-landing-inner h2 { margin: 56px 0 16px; color: #fff; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.25; }
+.public-site .seo-landing-inner p { max-width: 760px; color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; }
+.public-site .seo-lead { color: #fff !important; font-size: 1.18rem !important; }
+.public-site .seo-related { display: grid; gap: 12px; }
+.public-site .seo-related a { color: var(--primary-cyan); text-decoration: underline; text-underline-offset: 4px; }
+.public-site .seo-faq { display: grid; gap: 12px; }
+.public-site .seo-faq details { border: 1px solid rgba(0,243,255,.35); border-radius: 12px; background: rgba(255,255,255,.04); }
+.public-site .seo-faq summary { min-height: 52px; padding: 15px 18px; color: #fff; cursor: pointer; font-weight: 700; }
+.public-site .seo-faq p { padding: 0 18px 16px; margin: 0; }
+
 .public-site .booking-info .sub-title {
   margin: 0 0 30px;
   font-family: inherit;

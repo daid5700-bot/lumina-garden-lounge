@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SUPABASE_DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL }}
-      KEEP_BACKUPS: 14
+      KEEP_BACKUPS: 3
     steps:
       - name: Check out repository
         uses: actions/checkout@v4

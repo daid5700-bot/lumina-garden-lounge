@@ -39,27 +39,11 @@ export default async function HomePage({
   const zaloDisplay = zaloDigits.length === 10
     ? `${zaloDigits.slice(0, 4)}.${zaloDigits.slice(4, 7)}.${zaloDigits.slice(7)}`
     : site.zalo;
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Restaurant",
-    name: site.siteName,
-    image: [site.heroImage],
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: site.address,
-      addressLocality: "Ho Chi Minh City",
-      addressCountry: "VN"
-    },
-    telephone: site.phone,
-    email: site.email,
-    priceRange: "₫₫₫",
-    openingHours: "Mo-Su 18:00-02:00",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/${locale}`,
-    servesCuisine: ["Vietnamese", "Fusion", "Cocktails"],
-    acceptsReservations: true,
-    menu: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/${locale}/menu`,
-    sameAs: [site.facebook, site.instagram].filter(Boolean)
-  };
+  const currentUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/${locale}`;
+  const jsonLd = { "@context": "https://schema.org", "@graph": [
+    { "@type": ["Organization", "LocalBusiness", "Restaurant"], name: site.siteName, url: currentUrl, image: [site.heroImage], telephone: site.phone, email: site.email, address: { "@type": "PostalAddress", streetAddress: site.address, addressLocality: "Ho Chi Minh City", addressCountry: "VN" }, openingHours: site.openingHours, menu: `${currentUrl}/menu`, sameAs: [site.facebook, site.instagram].filter(Boolean) },
+    { "@type": "WebSite", name: site.siteName, url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000" }
+  ] };
 
   return (
     <>
