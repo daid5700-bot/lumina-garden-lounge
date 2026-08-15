@@ -30,7 +30,6 @@ export function Header({ locale, siteName }: { locale: Locale; siteName: string 
       <div className="nav-container">
         <ul className="nav-links left-links">
           <li><Link href={`/${locale}`} onClick={closeMenu} className={isHome ? "active" : ""}>{t.nav.home}</Link></li>
-          <li><Link href={`/${locale}#about`} onClick={closeMenu}>{t.nav.about}</Link></li>
           {locale === "vi" && <li><Link href="/vi/lounge-quan-5" onClick={closeMenu}>Lounge Quận 5</Link></li>}
           <li><Link href={`/${locale}/menu`} onClick={closeMenu} className={pathname === `/${locale}/menu` ? "active" : ""}>{t.nav.menu}</Link></li>
         </ul>

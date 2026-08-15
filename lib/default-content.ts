@@ -53,9 +53,9 @@ export const siteBase = {
   zalo: "0123456789",
   messenger: "https://m.me/909lumina",
   email: "hello@909lumina.vn",
-  address: "Quận 5, Thành phố Hồ Chí Minh, Việt Nam",
+  address: "909 Trần Hưng Đạo, Phường Chợ Quán, TP. Hồ Chí Minh",
   mapUrl: null,
-  openingHours: "18:00 — 02:00",
+  openingHours: "16:00 — 00:00",
   facebook: "https://facebook.com/909lumina",
   instagram: "https://instagram.com/909lumina"
 };
