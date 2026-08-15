@@ -177,6 +177,7 @@
 }
 
 .public-site .seo-landing-inner { width: 100%; margin: 0 auto; padding: 145px 8vw 100px; color: var(--text-main); }
+.public-site .seo-landing-inner .breadcrumb { margin: 0 0 30px; padding: 0; }
 .public-site .seo-landing-inner h1 { margin: 28px 0 22px; color: var(--primary-cyan); font-size: clamp(2.2rem, 5vw, 4.2rem); line-height: 1.15; }
 .public-site .seo-landing-inner h2 { margin: 56px 0 16px; color: #fff; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.25; }
 .public-site .seo-landing-inner p { max-width: 760px; color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; }
