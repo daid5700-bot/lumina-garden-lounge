@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: { default: "909 Lumina Garden Lounge", template: "%s | 909 Lumina" },
   description: "909 Lumina Garden Lounge",
   applicationName: "909 Lumina Garden Lounge",
-  icons: { icon: "/icon.svg" },
+  icons: { icon: "/lumina-logo.svg" },
   category: "restaurant",
   referrer: "origin-when-cross-origin",
   formatDetection: { telephone: true, email: true, address: true }
